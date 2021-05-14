@@ -9,9 +9,10 @@ import {
   Theme,
   Checkbox,
 } from '@material-ui/core';
-import { green, red } from '@material-ui/core/colors';
-import { Cancel, CheckCircle } from '@material-ui/icons';
+import { blue, green, red } from '@material-ui/core/colors';
+import { Cancel, CheckCircle, Home } from '@material-ui/icons';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      flexDirection: 'column',
       height: '100vh',
       width: '100vw',
     },
@@ -35,6 +37,15 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       flexDirection: 'column',
       paddingLeft: theme.spacing(2),
+    },
+    linkGoBack: {
+      textDecoration: 'none',
+      fontSize: '16px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      margin: theme.spacing(3),
+      color: blue[500],
     },
   }),
 );
@@ -64,6 +75,9 @@ function ReportQuestions(): JSX.Element {
 
   return (
     <Container className={classes.root}>
+      <Link to="/" className={classes.linkGoBack}>
+        <Home /> Go home
+      </Link>
       <div className={classes.report}>
         {questions.map((item, index) => (
           <div>

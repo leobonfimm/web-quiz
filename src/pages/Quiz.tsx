@@ -54,11 +54,10 @@ const useStyles = makeStyles((theme: Theme) =>
     success: {
       color: '#388E3C',
     },
-    footer: {
-      display: 'flex',
+    containerButtonActions: {
       alignItems: 'center',
       justifyContent: 'space-between',
-      gap: 10,
+      gap: 2,
     },
   }),
 );
@@ -320,34 +319,46 @@ function Quiz(): JSX.Element {
             </Button>
           </div>
 
-          <footer className={classes.footer}>
+          <div>
             {qtdQuestionsAnswered === Number(qtdAsk) && (
-              <>
+              <div className={classes.containerButtonActions}>
+                <Link
+                  to="/report-question"
+                  style={{
+                    textDecoration: 'none',
+                    color: '#FFF',
+                    flex: 1,
+                  }}
+                >
+                  <Button
+                    type="button"
+                    className={classes.buttonActions}
+                    variant="contained"
+                    color="primary"
+                    startIcon={<FormatListNumbered />}
+                    style={{
+                      color: '#FFF',
+                      background: '#00bfa5',
+                      width: '100%',
+                    }}
+                  >
+                    Report
+                  </Button>
+                </Link>
+
                 <Button
                   variant="contained"
                   color="default"
+                  type="button"
                   startIcon={<ArrowBackIos />}
-                  fullWidth
                   onClick={goBack}
+                  className={classes.buttonActions}
                 >
                   Back
                 </Button>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  startIcon={<FormatListNumbered />}
-                  fullWidth
-                >
-                  <Link
-                    style={{ textDecoration: 'none', color: '#FFF' }}
-                    to="/report-question"
-                  >
-                    Report
-                  </Link>
-                </Button>
-              </>
+              </div>
             )}
-          </footer>
+          </div>
         </Container>
       )}
     </div>

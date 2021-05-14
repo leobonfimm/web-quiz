@@ -46,7 +46,7 @@ function Header(): JSX.Element {
 
   return (
     <>
-      {lastTotalQuestions === 0 && (
+      {lastTotalQuestions > 0 && (
         <Container maxWidth="xs" className={classes.header}>
           <h1>
             Report rate replied: {lastQuestionsHit}/{lastTotalQuestions}
