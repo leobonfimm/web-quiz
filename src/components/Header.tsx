@@ -43,16 +43,20 @@ function Header(): JSX.Element {
     Number(localStorage.getItem('@WebQuiz:QtdTotalQuestions')),
   );
   return (
-    <Container maxWidth="xs" className={classes.header}>
-      <h1>
-        Report rate replied: {lastQuestionsHit}/{lastTotalQuestions}
-      </h1>
+    <>
+      {lastTotalQuestions === 0 && (
+        <Container maxWidth="xs" className={classes.header}>
+          <h1>
+            Report rate replied: {lastQuestionsHit}/{lastTotalQuestions}
+          </h1>
 
-      <Link to="/report-question" className={classes.linkReport}>
-        Last report answered
-        <ArrowForwardIos className={classes.iconArroRight} />
-      </Link>
-    </Container>
+          <Link to="/report-question" className={classes.linkReport}>
+            Last report answered
+            <ArrowForwardIos className={classes.iconArroRight} />
+          </Link>
+        </Container>
+      )}
+    </>
   );
 }
 
