@@ -1,4 +1,4 @@
-<h1 align="center">Space Traveling</h1>
+<h1 align="center">Webquiz</h1>
 <p align="center">
   <a href="#tecnologias">Tecnologias</a>
   &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
@@ -29,8 +29,7 @@ Aplicação WEB para responder questionários usando React e Material-UI, e que 
 ## 👨‍💻 Como executar
 - Clone o repositório
 - Instale as dependências com ```yarn```
-- Inicie o servidor com ```yarn dev```
+- Inicie o servidor com ```yarn start```
 
-É preciso ter uma conta e configurada e um repositório dentro do <strong><a href="https://prismic.io/">Prismic</a></strong>.
 
 Agora é só acessar ```localhost:3000``` no navegador.
