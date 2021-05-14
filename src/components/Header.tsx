@@ -39,9 +39,11 @@ function Header(): JSX.Element {
   const [lastQuestionsHit, setLastQuestionsHit] = useState(
     Number(localStorage.getItem('@WebQuiz:QtdHit')),
   );
+
   const [lastTotalQuestions, setLastTotalQuestions] = useState(
     Number(localStorage.getItem('@WebQuiz:QtdTotalQuestions')),
   );
+
   return (
     <>
       {lastTotalQuestions === 0 && (
