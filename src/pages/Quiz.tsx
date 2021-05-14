@@ -1,5 +1,6 @@
 import {
   Button,
+  CircularProgress,
   Container,
   createStyles,
   FormControl,
@@ -11,9 +12,9 @@ import {
   RadioGroup,
   Theme,
 } from '@material-ui/core';
-import { ArrowBackIos } from '@material-ui/icons';
+import { ArrowBackIos, FormatListNumbered } from '@material-ui/icons';
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, Link } from 'react-router-dom';
 
 import api from '../services/api';
 
@@ -52,6 +53,12 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     success: {
       color: '#388E3C',
+    },
+    footer: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 10,
     },
   }),
 );
@@ -112,7 +119,9 @@ function Quiz(): JSX.Element {
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     localStorage.setItem('@WebQuiz:QtdTotalQuestions', qtdAsk);
+
     const oneMoreQuestionAnswered = qtdQuestionsAnswered + 1;
     setQtdQuestionsAnswered(oneMoreQuestionAnswered);
 
@@ -121,8 +130,6 @@ function Quiz(): JSX.Element {
       questions[indexQuestion].correct_answer
     ) {
       setHelperText('Sorry, wrong answer!');
-      questions[indexQuestion].isError = true;
-      questions[indexQuestion].isHit = false;
 
       const stateQuestions = questions.map(item => {
         if (item.question === questions[indexQuestion].question) {
@@ -138,11 +145,10 @@ function Quiz(): JSX.Element {
 
       setQuestions(stateQuestions);
 
+      localStorage.setItem('@WebQuiz:Report', JSON.stringify(stateQuestions));
+
       return;
     }
-
-    questions[indexQuestion].isHit = true;
-    questions[indexQuestion].isError = false;
 
     const stateQuestions = questions.map(item => {
       if (item.question === questions[indexQuestion].question) {
@@ -162,6 +168,8 @@ function Quiz(): JSX.Element {
     const qtdHit = questions.reduce((sumTotal, item) => {
       return (sumTotal += item.isHit ? 1 : 0);
     }, 0);
+
+    localStorage.setItem('@WebQuiz:Report', JSON.stringify(stateQuestions));
 
     localStorage.setItem('@WebQuiz:QtdHit', String(qtdHit));
   }
@@ -228,7 +236,7 @@ function Quiz(): JSX.Element {
           height: '100vh',
         }}
       >
-        <h1>Carregando...</h1>
+        <CircularProgress />
       </div>
     );
   }
@@ -312,17 +320,32 @@ function Quiz(): JSX.Element {
             </Button>
           </div>
 
-          <footer>
+          <footer className={classes.footer}>
             {qtdQuestionsAnswered === Number(qtdAsk) && (
-              <Button
-                variant="contained"
-                color="default"
-                startIcon={<ArrowBackIos />}
-                fullWidth
-                onClick={goBack}
-              >
-                Back
-              </Button>
+              <>
+                <Button
+                  variant="contained"
+                  color="default"
+                  startIcon={<ArrowBackIos />}
+                  fullWidth
+                  onClick={goBack}
+                >
+                  Back
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<FormatListNumbered />}
+                  fullWidth
+                >
+                  <Link
+                    style={{ textDecoration: 'none', color: '#FFF' }}
+                    to="/report-question"
+                  >
+                    Report
+                  </Link>
+                </Button>
+              </>
             )}
           </footer>
         </Container>

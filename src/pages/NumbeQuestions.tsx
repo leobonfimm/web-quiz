@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      flexDirection: 'column',
     },
     main: {
       display: 'flex',
@@ -118,85 +119,91 @@ function NumbeQuestions(): JSX.Element {
   });
 
   return (
-    <>
+    <div className={classes.root}>
       <Header />
-      <div className={classes.root}>
-        <Snackbar
-          anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
-          open={isError}
-          autoHideDuration={3000}
-          onClose={handleClose}
-        >
-          <Alert onClose={handleClose} severity="error">
-            O valor deve ser maior que zero
-          </Alert>
-        </Snackbar>
-        <Container component="main" maxWidth="xs" className={classes.main}>
-          <div className={classes.boxForm}>
-            <img
-              className={classes.logo}
-              alt="Logo questions"
-              src={questionsSvg}
+      <Snackbar
+        anchorOrigin={{ horizontal: 'center', vertical: 'top' }}
+        open={isError}
+        autoHideDuration={3000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity="error">
+          O valor deve ser maior que zero
+        </Alert>
+      </Snackbar>
+      <Container component="main" maxWidth="xs" className={classes.main}>
+        <div className={classes.boxForm}>
+          <img
+            className={classes.logo}
+            alt="Logo questions"
+            src={questionsSvg}
+          />
+
+          <form onSubmit={formik.handleSubmit} className={classes.form}>
+            <TextField
+              inputRef={inputRef}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              id="number_question"
+              label="Número de questões"
+              name="number_question"
+              autoFocus
+              className={classes.inputField}
+              type="number"
+              value={formik.values.number_question}
+              onChange={formik.handleChange}
+              disabled={isDisableInput}
             />
 
-            <form onSubmit={formik.handleSubmit} className={classes.form}>
-              <TextField
-                inputRef={inputRef}
-                variant="outlined"
-                margin="normal"
-                required
+            {!isDisableInput ? (
+              <Button
+                type="submit"
                 fullWidth
-                id="number_question"
-                label="Número de questões"
-                name="number_question"
-                autoFocus
-                className={classes.inputField}
-                type="number"
-                value={formik.values.number_question}
-                onChange={formik.handleChange}
-                disabled={isDisableInput}
-              />
-
-              {!isDisableInput ? (
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+              >
+                Confirmar
+              </Button>
+            ) : (
+              <div className={classes.containerButtonActions}>
+                <Link
+                  to={`/quiz/${inputRef.current?.value}`}
+                  style={{
+                    textDecoration: 'none',
+                    color: '#FFF',
+                    flex: 1,
+                  }}
                 >
-                  Confirmar
-                </Button>
-              ) : (
-                <div className={classes.containerButtonActions}>
                   <Button
                     type="button"
                     className={classes.buttonActions}
-                    style={{ background: '#00bfa5', color: '#fff' }}
+                    style={{
+                      color: '#FFF',
+                      background: '#00bfa5',
+                      width: '100%',
+                    }}
                   >
-                    <Link
-                      style={{ textDecoration: 'none', color: '#FFF' }}
-                      to={`/quiz/${inputRef.current?.value}`}
-                    >
-                      Start
-                    </Link>
+                    Start
                   </Button>
+                </Link>
 
-                  <Button
-                    type="button"
-                    className={classes.buttonActions}
-                    style={{ background: '#ef5350', color: '#fff' }}
-                    onClick={handleCancel}
-                  >
-                    Cancelar
-                  </Button>
-                </div>
-              )}
-            </form>
-          </div>
-        </Container>
-      </div>
-    </>
+                <Button
+                  type="button"
+                  className={classes.buttonActions}
+                  style={{ background: '#ef5350', color: '#fff' }}
+                  onClick={handleCancel}
+                >
+                  Cancelar
+                </Button>
+              </div>
+            )}
+          </form>
+        </div>
+      </Container>
+    </div>
   );
 }
 
