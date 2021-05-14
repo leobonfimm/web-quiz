@@ -164,7 +164,7 @@ function Quiz(): JSX.Element {
     setQuestions(stateQuestions);
 
     setHelperText('You got it!');
-    const qtdHit = questions.reduce((sumTotal, item) => {
+    const qtdHit = stateQuestions.reduce((sumTotal, item) => {
       return (sumTotal += item.isHit ? 1 : 0);
     }, 0);
 
